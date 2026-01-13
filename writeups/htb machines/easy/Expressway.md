@@ -17,6 +17,7 @@ nmap -sV -sC 10.10.11.87
 
 ```
 
+
 * **Result:** Only **Port 22 (SSH)** is open.
 * **Analysis:** A single SSH port usually implies the "front door" is locked. We need to look for side doors, typically via UDP or web apps on non-standard ports.
 

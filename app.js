@@ -122,6 +122,7 @@ function goHome() {
     renderView();
 }
 
+
 function showHtb() {
     selectedHtbDifficulty = null;
     // Check if HTB has difficulty folders

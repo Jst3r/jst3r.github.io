@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 Scans writeups directory and generates writeups.json
-Run this whenever you add new writeups: python3 build.py
 """
 
 import os

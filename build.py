@@ -68,6 +68,32 @@ def scan_writeups():
                     "file": item_path
                 })
     
+    # Scan THM rooms (same structure as HTB)
+    thm_dir = os.path.join(WRITEUPS_DIR, "thm rooms")
+    if os.path.exists(thm_dir):
+        for item in os.listdir(thm_dir):
+            item_path = os.path.join(thm_dir, item)
+            
+            if os.path.isdir(item_path):
+                # It's a difficulty folder (easy, medium, hard)
+                for filename in os.listdir(item_path):
+                    if filename.endswith('.md') and not filename.startswith('_'):
+                        filepath = os.path.join(item_path, filename)
+                        writeups.append({
+                            "title": get_title_from_md(filepath),
+                            "category": "thm",
+                            "difficulty": item,
+                            "file": filepath
+                        })
+            elif item.endswith('.md') and not item.startswith('_'):
+                # .md file directly in thm rooms (no difficulty)
+                writeups.append({
+                    "title": get_title_from_md(item_path),
+                    "category": "thm",
+                    "difficulty": None,
+                    "file": item_path
+                })
+    
     # Scan CTF writeups
     ctf_dir = os.path.join(WRITEUPS_DIR, "ctf")
     if os.path.exists(ctf_dir):
@@ -105,13 +131,16 @@ def scan_writeups():
 def main():
     writeups = scan_writeups()
     
-    # Sort: HTB first, then CTFs alphabetically
-    writeups.sort(key=lambda w: (
-        0 if w.get('category') == 'htb' else 1,
-        w.get('ctf', ''),
-        w.get('category', ''),
-        w.get('title', '')
-    ))
+    # Sort: HTB first, THM second, then CTFs alphabetically
+    def sort_key(w):
+        if w.get('category') == 'htb':
+            return (0, '', w.get('difficulty', ''), w.get('title', ''))
+        elif w.get('category') == 'thm':
+            return (1, '', w.get('difficulty', ''), w.get('title', ''))
+        else:
+            return (2, w.get('ctf', ''), w.get('category', ''), w.get('title', ''))
+    
+    writeups.sort(key=sort_key)
     
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(writeups, f, indent=2)
@@ -120,10 +149,12 @@ def main():
     
     # Summary
     htb_count = len([w for w in writeups if w.get('category') == 'htb'])
+    thm_count = len([w for w in writeups if w.get('category') == 'thm'])
     ctf_count = len([w for w in writeups if w.get('ctf')])
     ctf_names = set(w.get('ctf') for w in writeups if w.get('ctf'))
     
     print(f"  - HTB Machines: {htb_count}")
+    print(f"  - THM Rooms: {thm_count}")
     print(f"  - CTF Writeups: {ctf_count} across {len(ctf_names)} CTF(s)")
     for ctf in sorted(ctf_names):
         count = len([w for w in writeups if w.get('ctf') == ctf])

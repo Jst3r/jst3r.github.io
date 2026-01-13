@@ -6,6 +6,7 @@ let currentView = 'home';
 let selectedCtf = null;
 let selectedCtfCategory = null;
 let selectedHtbDifficulty = null;
+let selectedThmDifficulty = null;
 
 // DOM Elements
 const writeupsList = document.getElementById('writeups-list');
@@ -36,6 +37,16 @@ function htbHasDifficulties() {
     return writeups.some(w => w.category === 'htb' && w.difficulty !== null);
 }
 
+// Get THM difficulties (only non-null)
+function getThmDifficulties() {
+    return [...new Set(writeups.filter(w => w.category === 'thm' && w.difficulty !== null).map(w => w.difficulty))];
+}
+
+// Check if THM has difficulty folders
+function thmHasDifficulties() {
+    return writeups.some(w => w.category === 'thm' && w.difficulty !== null);
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
     // Load writeups from JSON
@@ -53,12 +64,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ctf = params.get('ctf');
     const cat = params.get('cat');
     const htb = params.get('htb');
+    const thm = params.get('thm');
 
     if (writeupFile) {
         loadWriteup(writeupFile);
     } else if (htb) {
         selectedHtbDifficulty = htb;
         currentView = 'htb-writeups';
+        renderView();
+    } else if (thm) {
+        selectedThmDifficulty = thm;
+        currentView = 'thm-writeups';
         renderView();
     } else if (ctf && cat) {
         selectedCtf = ctf;
@@ -81,7 +97,8 @@ function renderView() {
 
     categoriesNav.innerHTML = `
         <button class="category-btn ${currentView === 'home' ? 'active' : ''}" onclick="goHome()">All</button>
-        <button class="category-btn ${currentView === 'htb' ? 'active' : ''}" onclick="showHtb()">HTB Machines</button>
+        <button class="category-btn ${currentView.startsWith('htb') ? 'active' : ''}" onclick="showHtb()">HTB</button>
+        <button class="category-btn ${currentView.startsWith('thm') ? 'active' : ''}" onclick="showThm()">THM</button>
         <button class="category-btn ${currentView.startsWith('ctf') ? 'active' : ''}" onclick="showCtfList()">CTF</button>
     `;
 
@@ -109,6 +126,15 @@ function renderView() {
             break;
         case 'ctf-direct':
             renderCtfDirect();
+            break;
+        case 'thm':
+            renderThm();
+            break;
+        case 'thm-difficulties':
+            renderThmDifficulties();
+            break;
+        case 'thm-writeups':
+            renderThmWriteups();
             break;
     }
 }
@@ -139,6 +165,24 @@ function selectHtbDifficulty(difficulty) {
     selectedHtbDifficulty = difficulty;
     currentView = 'htb-writeups';
     history.pushState({}, '', `?htb=${difficulty}`);
+    renderView();
+}
+
+function showThm() {
+    selectedThmDifficulty = null;
+    if (thmHasDifficulties()) {
+        currentView = 'thm-difficulties';
+    } else {
+        currentView = 'thm';
+    }
+    history.pushState({}, '', 'index.html');
+    renderView();
+}
+
+function selectThmDifficulty(difficulty) {
+    selectedThmDifficulty = difficulty;
+    currentView = 'thm-writeups';
+    history.pushState({}, '', `?thm=${difficulty}`);
     renderView();
 }
 
@@ -174,15 +218,17 @@ function selectCtfCategory(category) {
 // Render functions
 function renderHome() {
     const htbDifficulties = getHtbDifficulties();
+    const thmDifficulties = getThmDifficulties();
     const ctfNames = getCtfNames();
 
     // Order difficulties
     const order = ['easy', 'medium', 'hard', 'insane'];
-    const sortedDiffs = htbDifficulties.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    const sortedHtb = htbDifficulties.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    const sortedThm = thmDifficulties.sort((a, b) => order.indexOf(a) - order.indexOf(b));
 
     writeupsList.innerHTML = `
         <h2 class="section-title">HTB Machines</h2>
-        ${sortedDiffs.length ? sortedDiffs.map(diff => `
+        ${sortedHtb.length ? sortedHtb.map(diff => `
             <div class="writeup-card" onclick="selectHtbDifficulty('${diff}')">
                 <h3>${diff.toUpperCase()}</h3>
                 <div class="meta">
@@ -190,6 +236,16 @@ function renderHome() {
                 </div>
             </div>
         `).join('') : '<p class="loading">No HTB writeups yet.</p>'}
+        
+        <h2 class="section-title" style="margin-top: 2rem;">THM Rooms</h2>
+        ${sortedThm.length ? sortedThm.map(diff => `
+            <div class="writeup-card" onclick="selectThmDifficulty('${diff}')">
+                <h3>${diff.toUpperCase()}</h3>
+                <div class="meta">
+                    <span class="tag ${diff}">${writeups.filter(w => w.category === 'thm' && w.difficulty === diff).length} rooms</span>
+                </div>
+            </div>
+        `).join('') : '<p class="loading">No THM writeups yet.</p>'}
         
         <h2 class="section-title" style="margin-top: 2rem;">CTF Writeups</h2>
         ${ctfNames.length ? ctfNames.map(ctf => `
@@ -237,6 +293,42 @@ function renderHtbWriteups() {
         <a href="javascript:showHtb()" class="back-btn">← Back to difficulties</a>
         <h2 class="section-title">HTB - ${selectedHtbDifficulty.toUpperCase()}</h2>
         ${htbWriteups.map(w => renderWriteupCard(w, selectedHtbDifficulty)).join('')}
+    `;
+}
+
+function renderThm() {
+    const thmWriteups = writeups.filter(w => w.category === 'thm');
+    if (thmWriteups.length === 0) {
+        writeupsList.innerHTML = '<p class="loading">No THM writeups yet.</p>';
+        return;
+    }
+    writeupsList.innerHTML = thmWriteups.map(w => renderWriteupCard(w, w.difficulty || 'thm')).join('');
+}
+
+function renderThmDifficulties() {
+    const difficulties = getThmDifficulties();
+    const order = ['easy', 'medium', 'hard', 'insane'];
+    const sorted = difficulties.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+    writeupsList.innerHTML = `
+        <h2 class="section-title">THM Rooms - Difficulty</h2>
+        ${sorted.map(diff => `
+            <div class="writeup-card" onclick="selectThmDifficulty('${diff}')">
+                <h3>${diff.toUpperCase()}</h3>
+                <div class="meta">
+                    <span class="tag ${diff}">${writeups.filter(w => w.category === 'thm' && w.difficulty === diff).length} rooms</span>
+                </div>
+            </div>
+        `).join('')}
+    `;
+}
+
+function renderThmWriteups() {
+    const thmWriteups = writeups.filter(w => w.category === 'thm' && w.difficulty === selectedThmDifficulty);
+    writeupsList.innerHTML = `
+        <a href="javascript:showThm()" class="back-btn">← Back to difficulties</a>
+        <h2 class="section-title">THM - ${selectedThmDifficulty.toUpperCase()}</h2>
+        ${thmWriteups.map(w => renderWriteupCard(w, selectedThmDifficulty)).join('')}
     `;
 }
 

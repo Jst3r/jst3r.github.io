@@ -24,9 +24,9 @@ body {
 
 /* === Layout === */
 .container {
-    max-width: 720px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 4rem 2rem;
 }
 
 /* === Header === */
@@ -200,6 +200,11 @@ header h1 {
 .writeup-card .tag.ctf {
     background: rgba(59, 130, 246, 0.15);
     color: #3b82f6;
+}
+
+.writeup-card .tag.thm {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
 }
 
 /* === Back Button === */

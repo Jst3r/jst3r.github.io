@@ -30,12 +30,6 @@
     "file": "writeups/htb machines/easy/Soulmate.md"
   },
   {
-    "title": "File",
-    "ctf": "htb-ctf",
-    "category": null,
-    "file": "writeups/ctf/htb-ctf/file.md"
-  },
-  {
     "title": "Baby bof - UofT CTF 2026",
     "ctf": "uoftctf",
     "category": "pwn",

@@ -1,0 +1,68 @@
+[
+  {
+    "title": "Codeparttwo",
+    "category": "htb",
+    "difficulty": "easy",
+    "file": "writeups/htb machines/easy/codePartTwo.md"
+  },
+  {
+    "title": "Conversor",
+    "category": "htb",
+    "difficulty": "easy",
+    "file": "writeups/htb machines/easy/Conversor.md"
+  },
+  {
+    "title": "Expressway",
+    "category": "htb",
+    "difficulty": "easy",
+    "file": "writeups/htb machines/easy/Expressway.md"
+  },
+  {
+    "title": "Monitorsfour",
+    "category": "htb",
+    "difficulty": "easy",
+    "file": "writeups/htb machines/easy/Monitorsfour.md"
+  },
+  {
+    "title": "Soulmate",
+    "category": "htb",
+    "difficulty": "easy",
+    "file": "writeups/htb machines/easy/Soulmate.md"
+  },
+  {
+    "title": "File",
+    "ctf": "htb-ctf",
+    "category": null,
+    "file": "writeups/ctf/htb-ctf/file.md"
+  },
+  {
+    "title": "Baby bof - UofT CTF 2026",
+    "ctf": "uoftctf",
+    "category": "pwn",
+    "file": "writeups/ctf/uoftctf/pwn/babybof.md"
+  },
+  {
+    "title": "Magic - UofTCTF 2026 Writeup",
+    "ctf": "uoftctf",
+    "category": "rev",
+    "file": "writeups/ctf/uoftctf/rev/Will_u_Accept_Some_Magic.md"
+  },
+  {
+    "title": "Symbol of Hope - UofTCTF 2026 Writeup",
+    "ctf": "uoftctf",
+    "category": "rev",
+    "file": "writeups/ctf/uoftctf/rev/symbole_of_hope.md"
+  },
+  {
+    "title": "UofTCTF 2026 - baby (Rev) Writeup",
+    "ctf": "uoftctf",
+    "category": "rev",
+    "file": "writeups/ctf/uoftctf/rev/baby.md"
+  },
+  {
+    "title": "UofTCTF 2026: Bring Your Own Program (BYOP) Writeup",
+    "ctf": "uoftctf",
+    "category": "rev",
+    "file": "writeups/ctf/uoftctf/rev/byop.md"
+  }
+]

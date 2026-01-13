@@ -1,0 +1,351 @@
+/* === Base & Variables === */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #21262d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79b8ff;
+    --border: #30363d;
+    --code-bg: #1c2128;
+    --success: #3fb950;
+    --warning: #d29922;
+    --danger: #f85149;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* === Layout === */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* === Header === */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+}
+
+header h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+header .accent {
+    color: var(--accent);
+}
+
+.tagline {
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+/* === Navigation === */
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.category-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+}
+
+.category-btn.active {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+}
+
+/* === Writeup Cards === */
+#writeups-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.writeup-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.writeup-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.writeup-card h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+}
+
+.writeup-card .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.writeup-card .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.writeup-card .tag.htb {
+    color: var(--success);
+    border: 1px solid var(--success);
+    background: transparent;
+}
+
+.writeup-card .tag.pwn {
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    background: transparent;
+}
+
+.writeup-card .tag.rev {
+    color: var(--warning);
+    border: 1px solid var(--warning);
+    background: transparent;
+}
+
+.writeup-card .tag.ctf {
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    background: transparent;
+}
+
+/* HTB Difficulty colors */
+.writeup-card .tag.easy {
+    color: #3fb950;
+    border: 1px solid #3fb950;
+    background: transparent;
+}
+
+.writeup-card .tag.medium {
+    color: #d29922;
+    border: 1px solid #d29922;
+    background: transparent;
+}
+
+.writeup-card .tag.hard {
+    color: #f85149;
+    border: 1px solid #f85149;
+    background: transparent;
+}
+
+.writeup-card .tag.insane {
+    color: #a371f7;
+    border: 1px solid #a371f7;
+    background: transparent;
+}
+
+/* === Section Titles === */
+.section-title {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* === Writeup Detail Page === */
+.writeup-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+}
+
+.back-btn:hover {
+    color: var(--accent);
+}
+
+/* === Markdown Styles === */
+.writeup-content h1,
+.writeup-content h2,
+.writeup-content h3,
+.writeup-content h4 {
+    color: var(--text-primary);
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.writeup-content h1 {
+    font-size: 1.8rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+.writeup-content h2 {
+    font-size: 1.4rem;
+}
+
+.writeup-content h3 {
+    font-size: 1.2rem;
+}
+
+.writeup-content h4 {
+    font-size: 1rem;
+}
+
+.writeup-content p {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.writeup-content a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.writeup-content a:hover {
+    text-decoration: underline;
+}
+
+.writeup-content code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.writeup-content pre {
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.writeup-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.writeup-content blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--text-secondary);
+}
+
+.writeup-content ul,
+.writeup-content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.writeup-content li {
+    margin-bottom: 0.5rem;
+}
+
+.writeup-content img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 1rem 0;
+}
+
+.writeup-content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* === Footer === */
+footer {
+    text-align: center;
+    padding: 3rem 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .categories {
+        gap: 0.4rem;
+    }
+
+    .category-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .writeup-content {
+        padding: 1.25rem;
+    }
+}
+
+/* === Loading State === */
+.loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}

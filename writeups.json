@@ -30,6 +30,12 @@
     "file": "writeups/htb machines/easy/Soulmate.md"
   },
   {
+    "title": "Reversing ELF - TryHackMe",
+    "category": "thm",
+    "difficulty": "easy",
+    "file": "writeups/thm rooms/easy/Reversing ELF.md"
+  },
+  {
     "title": "Baby bof - UofT CTF 2026",
     "ctf": "uoftctf",
     "category": "pwn",

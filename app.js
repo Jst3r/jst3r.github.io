@@ -161,6 +161,7 @@ function showHtb() {
     renderView();
 }
 
+
 function selectHtbDifficulty(difficulty) {
     selectedHtbDifficulty = difficulty;
     currentView = 'htb-writeups';

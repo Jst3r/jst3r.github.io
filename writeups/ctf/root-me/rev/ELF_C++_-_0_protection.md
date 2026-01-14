@@ -1,9 +1,5 @@
----
-title: ELF C++ - 0 protection
-date: 2026-01-14
-category: Reversing
----
 
+---
 # ELF C++ - 0 protection
 
 ## Challenge Description

@@ -36,7 +36,7 @@
     "file": "writeups/thm rooms/easy/Reversing ELF.md"
   },
   {
-    "title": "ELF C++ - 0 protection",
+    "title": "Elf C++ - 0 Protection",
     "ctf": "root-me",
     "category": "rev",
     "file": "writeups/ctf/root-me/rev/ELF_C++_-_0_protection.md"

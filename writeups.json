@@ -37,9 +37,9 @@
   },
   {
     "title": "ELF C++ - 0 protection",
-    "category": "rootme",
-    "subcategory": "rev",
-    "file": "writeups/root-me/rev/ELF_C++_-_0_protection.md"
+    "ctf": "root-me",
+    "category": "rev",
+    "file": "writeups/ctf/root-me/rev/ELF_C++_-_0_protection.md"
   },
   {
     "title": "Baby bof - UofT CTF 2026",

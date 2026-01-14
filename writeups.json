@@ -36,6 +36,12 @@
     "file": "writeups/thm rooms/easy/Reversing ELF.md"
   },
   {
+    "title": "ELF C++ - 0 protection",
+    "ctf": "root-me_challs",
+    "category": null,
+    "file": "writeups/ctf/root-me_challs/ELF_C++_-_0_protection.md"
+  },
+  {
     "title": "Baby bof - UofT CTF 2026",
     "ctf": "uoftctf",
     "category": "pwn",

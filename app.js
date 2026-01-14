@@ -7,6 +7,7 @@ let selectedCtf = null;
 let selectedCtfCategory = null;
 let selectedHtbDifficulty = null;
 let selectedThmDifficulty = null;
+let selectedRootMeSubcategory = null;
 
 // DOM Elements
 const writeupsList = document.getElementById('writeups-list');
@@ -47,6 +48,16 @@ function thmHasDifficulties() {
     return writeups.some(w => w.category === 'thm' && w.difficulty !== null);
 }
 
+// Get Root-Me subcategories (only non-null)
+function getRootMeSubcategories() {
+    return [...new Set(writeups.filter(w => w.category === 'rootme' && w.subcategory !== null).map(w => w.subcategory))];
+}
+
+// Check if Root-Me has subcategories
+function rootMeHasSubcategories() {
+    return writeups.some(w => w.category === 'rootme' && w.subcategory !== null);
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
     // Load writeups from JSON
@@ -76,6 +87,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         selectedThmDifficulty = thm;
         currentView = 'thm-writeups';
         renderView();
+    } else if (params.get('rootme')) {
+        selectedRootMeSubcategory = params.get('rootme');
+        currentView = 'rootme-writeups';
+        renderView();
     } else if (ctf && cat) {
         selectedCtf = ctf;
         selectedCtfCategory = cat;
@@ -99,6 +114,7 @@ function renderView() {
         <button class="category-btn ${currentView === 'home' ? 'active' : ''}" onclick="goHome()">All</button>
         <button class="category-btn ${currentView.startsWith('htb') ? 'active' : ''}" onclick="showHtb()">HTB</button>
         <button class="category-btn ${currentView.startsWith('thm') ? 'active' : ''}" onclick="showThm()">THM</button>
+        <button class="category-btn ${currentView.startsWith('rootme') ? 'active' : ''}" onclick="showRootMe()">Root-Me</button>
         <button class="category-btn ${currentView.startsWith('ctf') ? 'active' : ''}" onclick="showCtfList()">CTF</button>
     `;
 
@@ -135,6 +151,15 @@ function renderView() {
             break;
         case 'thm-writeups':
             renderThmWriteups();
+            break;
+        case 'rootme':
+            renderRootMe();
+            break;
+        case 'rootme-subcategories':
+            renderRootMeSubcategories();
+            break;
+        case 'rootme-writeups':
+            renderRootMeWriteups();
             break;
     }
 }
@@ -186,6 +211,24 @@ function selectThmDifficulty(difficulty) {
     renderView();
 }
 
+function showRootMe() {
+    selectedRootMeSubcategory = null;
+    if (rootMeHasSubcategories()) {
+        currentView = 'rootme-subcategories';
+    } else {
+        currentView = 'rootme';
+    }
+    history.pushState({}, '', 'index.html');
+    renderView();
+}
+
+function selectRootMeSubcategory(subcategory) {
+    selectedRootMeSubcategory = subcategory;
+    currentView = 'rootme-writeups';
+    history.pushState({}, '', `?rootme=${subcategory}`);
+    renderView();
+}
+
 function showCtfList() {
     currentView = 'ctf-list';
     selectedCtf = null;
@@ -219,6 +262,7 @@ function selectCtfCategory(category) {
 function renderHome() {
     const htbDifficulties = getHtbDifficulties();
     const thmDifficulties = getThmDifficulties();
+    const rootMeSubcategories = getRootMeSubcategories();
     const ctfNames = getCtfNames();
 
     // Order difficulties
@@ -247,6 +291,16 @@ function renderHome() {
             </div>
         `).join('') : '<p class="loading">No THM writeups yet.</p>'}
         
+        <h2 class="section-title" style="margin-top: 2rem;">Root-Me Challenges</h2>
+        ${rootMeSubcategories.length ? rootMeSubcategories.map(sub => `
+            <div class="writeup-card" onclick="selectRootMeSubcategory('${sub}')">
+                <h3>${sub.toUpperCase()}</h3>
+                <div class="meta">
+                    <span class="tag rootme">${writeups.filter(w => w.category === 'rootme' && w.subcategory === sub).length} challenges</span>
+                </div>
+            </div>
+        `).join('') : '<p class="loading">No Root-Me writeups yet.</p>'}
+
         <h2 class="section-title" style="margin-top: 2rem;">CTF Writeups</h2>
         ${ctfNames.length ? ctfNames.map(ctf => `
             <div class="writeup-card" onclick="selectCtf('${ctf}')">
@@ -332,6 +386,39 @@ function renderThmWriteups() {
     `;
 }
 
+function renderRootMe() {
+    const rootMeWriteups = writeups.filter(w => w.category === 'rootme');
+    if (rootMeWriteups.length === 0) {
+        writeupsList.innerHTML = '<p class="loading">No Root-Me writeups yet.</p>';
+        return;
+    }
+    writeupsList.innerHTML = rootMeWriteups.map(w => renderWriteupCard(w, w.subcategory || 'rootme')).join('');
+}
+
+function renderRootMeSubcategories() {
+    const subcategories = getRootMeSubcategories();
+    writeupsList.innerHTML = `
+        <h2 class="section-title">Root-Me Categories</h2>
+        ${subcategories.map(sub => `
+            <div class="writeup-card" onclick="selectRootMeSubcategory('${sub}')">
+                <h3>${sub.toUpperCase()}</h3>
+                <div class="meta">
+                    <span class="tag rootme">${writeups.filter(w => w.category === 'rootme' && w.subcategory === sub).length} challenges</span>
+                </div>
+            </div>
+        `).join('')}
+    `;
+}
+
+function renderRootMeWriteups() {
+    const rootMeWriteups = writeups.filter(w => w.category === 'rootme' && w.subcategory === selectedRootMeSubcategory);
+    writeupsList.innerHTML = `
+        <a href="javascript:showRootMe()" class="back-btn">← Back to categories</a>
+        <h2 class="section-title">Root-Me - ${selectedRootMeSubcategory.toUpperCase()}</h2>
+        ${rootMeWriteups.map(w => renderWriteupCard(w, selectedRootMeSubcategory)).join('')}
+    `;
+}
+
 function renderCtfList() {
     const ctfNames = getCtfNames();
     if (ctfNames.length === 0) {
@@ -414,6 +501,9 @@ async function loadWriteup(filePath) {
         if (writeup?.ctf) {
             backLink = `?ctf=${writeup.ctf}&cat=${writeup.category}`;
             backText = `Back to ${writeup.ctf.toUpperCase()} / ${writeup.category.toUpperCase()}`;
+        } else if (writeup?.category === 'rootme' && writeup?.subcategory) {
+            backLink = `?rootme=${writeup.subcategory}`;
+            backText = `Back to Root-Me / ${writeup.subcategory.toUpperCase()}`;
         }
 
         writeupsList.innerHTML = `

@@ -1,8 +1,4 @@
 
-Here is a structured walkthrough for the **Expressway** HackTheBox machine, based on the reference provided.
-
-This box is an excellent case study in why thorough UDP scanning is critical when TCP ports seem quiet. It moves from network-layer attacks (IPSec/IKE) to application-layer privilege escalation (custom sudo configuration).
-
 ---
 ## 1. Initial Reconnaissance
 
@@ -180,5 +176,3 @@ root@expressway:~# cat /root/root.txt
 | **Exploitation** | IKE Aggressive Mode PSK Capture | `ike-scan`         |
 | **Cracking**     | Offline Dictionary Attack       | `psk-crack`        |
 | **PrivEsc**      | Sudo Hostname Bypass            | Custom SUID binary |
-
-Would you like me to explain more about how IKE Aggressive mode works and why it is considered dangerous?

@@ -95,31 +95,6 @@ def scan_writeups():
                     "file": item_path
                 })
 
-    # Scan Root-Me writeups
-    rootme_dir = os.path.join(WRITEUPS_DIR, "root-me")
-    if os.path.exists(rootme_dir):
-        for item in os.listdir(rootme_dir):
-            item_path = os.path.join(rootme_dir, item)
-            
-            if os.path.isdir(item_path):
-                # Category folder (e.g., web-client, cryptanalysis)
-                for filename in os.listdir(item_path):
-                    if filename.endswith('.md') and not filename.startswith('_'):
-                        filepath = os.path.join(item_path, filename)
-                        writeups.append({
-                            "title": get_title_from_md(filepath),
-                            "category": "rootme",
-                            "subcategory": item,
-                            "file": filepath
-                        })
-            elif item.endswith('.md') and not item.startswith('_'):
-                # Direct file
-                writeups.append({
-                    "title": get_title_from_md(item_path),
-                    "category": "rootme",
-                    "subcategory": None,
-                    "file": item_path
-                })
     
     # Scan CTF writeups
     ctf_dir = os.path.join(WRITEUPS_DIR, "ctf")
@@ -164,10 +139,8 @@ def main():
             return (0, '', w.get('difficulty', ''), w.get('title', ''))
         elif w.get('category') == 'thm':
             return (1, '', w.get('difficulty', ''), w.get('title', ''))
-        elif w.get('category') == 'rootme':
-            return (2, '', w.get('subcategory', '') or '', w.get('title', ''))
         else:
-            return (3, w.get('ctf', ''), w.get('category', ''), w.get('title', ''))
+            return (2, w.get('ctf', ''), w.get('category', ''), w.get('title', ''))
     
     writeups.sort(key=sort_key)
     
@@ -179,13 +152,11 @@ def main():
     # Summary
     htb_count = len([w for w in writeups if w.get('category') == 'htb'])
     thm_count = len([w for w in writeups if w.get('category') == 'thm'])
-    rootme_count = len([w for w in writeups if w.get('category') == 'rootme'])
     ctf_count = len([w for w in writeups if w.get('ctf')])
     ctf_names = set(w.get('ctf') for w in writeups if w.get('ctf'))
     
     print(f"  - HTB Machines: {htb_count}")
     print(f"  - THM Rooms: {thm_count}")
-    print(f"  - Root-Me Challenges: {rootme_count}")
     print(f"  - CTF Writeups: {ctf_count} across {len(ctf_names)} CTF(s)")
     for ctf in sorted(ctf_names):
         count = len([w for w in writeups if w.get('ctf') == ctf])

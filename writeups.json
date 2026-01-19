@@ -36,6 +36,60 @@
     "file": "writeups/thm rooms/easy/Reversing ELF.md"
   },
   {
+    "title": "Deception - Malware Analysis Challenge",
+    "ctf": "IDEH_2026",
+    "category": "misc",
+    "file": "writeups/ctf/IDEH_2026/misc/Deception.md"
+  },
+  {
+    "title": "Leak and Leap - Detailed Writeup",
+    "ctf": "IDEH_2026",
+    "category": "pwn",
+    "file": "writeups/ctf/IDEH_2026/pwn/Leak_and_Leap.md"
+  },
+  {
+    "title": "Chall Writeup",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/not_easy_rev.md"
+  },
+  {
+    "title": "Exfil - Writeup",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/exfil.md"
+  },
+  {
+    "title": "Frozen Truth - Writeup",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/frozen.md"
+  },
+  {
+    "title": "Horizon",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/Horizon.md"
+  },
+  {
+    "title": "Synthetic State - CTF Writeup",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/Synthetic_State.md"
+  },
+  {
+    "title": "Under-Dev",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/under-dev.md"
+  },
+  {
+    "title": "Unsecure TODO",
+    "ctf": "IDEH_2026",
+    "category": "rev",
+    "file": "writeups/ctf/IDEH_2026/rev/unsecure-todo.md"
+  },
+  {
     "title": "Elf C++ - 0 Protection",
     "ctf": "root-me",
     "category": "rev",

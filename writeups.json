@@ -90,6 +90,24 @@
     "file": "writeups/ctf/IDEH_2026/rev/unsecure-todo.md"
   },
   {
+    "title": "KSA Kiosk - KnightCTF 2026 Writeup",
+    "ctf": "KnightCTF",
+    "category": "pwn",
+    "file": "writeups/ctf/KnightCTF/pwn/ksa_kiosk.md"
+  },
+  {
+    "title": "E4sy P3asy - KnightCTF 2026 Writeup",
+    "ctf": "KnightCTF",
+    "category": "rev",
+    "file": "writeups/ctf/KnightCTF/rev/E4sy_P3asy.md"
+  },
+  {
+    "title": "KrackM3 - KnightCTF 2026 Writeup",
+    "ctf": "KnightCTF",
+    "category": "rev",
+    "file": "writeups/ctf/KnightCTF/rev/KrackM3.md"
+  },
+  {
     "title": "Elf C++ - 0 Protection",
     "ctf": "root-me",
     "category": "rev",
